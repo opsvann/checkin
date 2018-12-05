@@ -12,6 +12,17 @@ export default class Register extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     auth(this.email.value, this.pw.value)
+      .then((data) => 
+        fetch('http://localhost:8080/perfil', {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({nome: this.email.value, email: this.email.value, uid: data.uid})
+        }).then(res => res.json())
+          .then(res => console.log(res))
+      )
       .catch(e => this.setState(setErrorMsg(e)))
   }
   render () {

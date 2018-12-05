@@ -13,13 +13,19 @@ public class Perfil {
 
     private String nome;
 
+    private String email;
+
     private String grupo;
+
+    private String uid;
 
     public Perfil() {}
 
-    public Perfil(String nome, String grupo) {
+    public Perfil(String nome, String email, String grupo, String uid) {
         this.nome = nome;
+        this.email = email;
         this.grupo = grupo;
+        this.uid = uid;
     }
 
     public Long getId() {
@@ -38,6 +44,14 @@ public class Perfil {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getGrupo() {
         return grupo;
     }
@@ -46,12 +60,22 @@ public class Perfil {
         this.grupo = grupo;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     @Override
     public String toString() {
         return "Perfil{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
                 ", grupo='" + grupo + '\'' +
+                ", uid='" + uid + '\'' +
                 '}';
     }
 }

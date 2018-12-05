@@ -7,5 +7,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 interface PerfilRepository extends JpaRepository<Perfil, Long> {
 
   Perfil findByNome(String nome);
+  Perfil findByUid(String uid);
 
 }

@@ -12,6 +12,11 @@ export default class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     login(this.email.value, this.pw.value)
+      .then((data) =>
+        fetch(`http://localhost:8080/perfil/user/${data.uid}`)
+        .then(response => response.json())
+        .then(data => console.log(data))
+      )
       .catch((error) => {
           this.setState(setErrorMsg('Invalid username/password.'))
         })

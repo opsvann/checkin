@@ -16,9 +16,7 @@ public class PerfilCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        Stream.of("Vanessa").forEach(nome ->
-                repository.save(new Perfil(nome, "ADMIN"))
-        );
+        repository.save(new Perfil("Vanessa", "vanessa@email.com", "ADMIN", "77uIDt1txReE8IJqhLejZEianIQ2"));
         repository.findAll().forEach(System.out::println);
     }
 }
