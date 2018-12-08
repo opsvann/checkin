@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { login, resetPassword } from '../helpers/auth'
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 function setErrorMsg(error) {
   return {
@@ -15,7 +16,9 @@ export default class Login extends Component {
       .then((data) =>
         fetch(`http://localhost:8080/perfil/user/${data.uid}`)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+          reactLocalStorage.setObject("user", data)
+        })
       )
       .catch((error) => {
           this.setState(setErrorMsg('Invalid username/password.'))

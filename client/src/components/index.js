@@ -5,8 +5,11 @@ import Login from './Login'
 import Register from './Register'
 import Home from './Home'
 import Dashboard from './protected/Dashboard'
+import Perfil from './protected/Perfil'
+import Evento from './protected/Evento'
 import { logout } from '../helpers/auth'
 import { firebaseAuth } from '../config/constants'
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -70,10 +73,14 @@ export default class App extends Component {
                   <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
                 </li>
                 <li>
+                  <Link to="/perfil" className="navbar-brand">Perfil</Link>
+                </li>
+                <li>
                   {this.state.authed
                     ? <button
                         style={{border: 'none', background: 'transparent'}}
                         onClick={() => {
+                          reactLocalStorage.setObject("user", {})
                           logout()
                         }}
                         className="navbar-brand">Logout</button>
@@ -92,6 +99,9 @@ export default class App extends Component {
                 <PublicRoute authed={this.state.authed} path='/login' component={Login} />
                 <PublicRoute authed={this.state.authed} path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
+                <PrivateRoute authed={this.state.authed} path='/perfil' component={Perfil} />
+                <PrivateRoute authed={this.state.authed} path='/evento/:id' component={Evento} />
+                <PrivateRoute authed={this.state.authed} path='/evento/new' component={Evento} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

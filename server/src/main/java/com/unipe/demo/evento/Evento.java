@@ -13,13 +13,16 @@ public class Evento {
 
     private String nome;
 
+    private String descricao;
+
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Set<Perfil> perfis;
 
     public Evento() {}
 
-    public Evento(String nome) {
+    public Evento(String nome, String descricao) {
         this.nome = nome;
+        this.descricao = descricao;
     }
 
     public Long getId() {
@@ -38,6 +41,14 @@ public class Evento {
         this.nome = nome;
     }
 
+    public String getDescricao() {
+      return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+      this.descricao = descricao;
+    }
+
     public Set getPerfis() {
       return perfis;
     }
@@ -51,6 +62,7 @@ public class Evento {
         return "Evento{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
                 '}';
     }
 }
