@@ -47,9 +47,12 @@ export default class Perfil extends Component {
       },
       body: JSON.stringify(this.state.perfil)
     }).then(() => {
+      const user = reactLocalStorage.getObject("user");
+      if (user.uid === this.state.perfil.uid) {
         reactLocalStorage.setObject("user", this.state.perfil)
-        this.props.history.push('/dashboard')
-      })
+      }
+      this.props.history.push('/dashboard')
+    })
   }
 
   removerPerfil = () => {

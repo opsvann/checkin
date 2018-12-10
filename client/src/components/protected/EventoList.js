@@ -68,7 +68,7 @@ export default class EventoList extends Component {
                   <p className="list-group-item-text">{evento.descricao}</p>
                   {evento.perfis.map((perfil, i) => {
                     return user.uid === perfil.uid &&
-                    <p key={i} className="list-group-item-text" style={{color: 'grey'}}>
+                    <p key={i} className="list-group-item-text" style={{color: 'black'}}>
                       Check-in realizado neste evento
                     </p>
                   })}
