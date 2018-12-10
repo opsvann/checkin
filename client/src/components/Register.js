@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { auth } from '../helpers/auth'
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 function setErrorMsg(error) {
   return {
@@ -19,11 +20,15 @@ export default class Register extends Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({nome: this.email.value, email: this.email.value, grupo: "", uid: data.uid})
+          body: JSON.stringify({nome: data.email, email: data.email, grupo: "", uid: data.uid})
         }).then(res => res.json())
-          .then(res => console.log(res))
+          .then(res => {
+            reactLocalStorage.setObject("user", res)
+          })
       )
-      .catch(e => console.log(e))
+      .catch(e => {
+        this.setState(setErrorMsg(e))
+      })
   }
   render () {
     return (

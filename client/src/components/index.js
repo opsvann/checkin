@@ -73,7 +73,8 @@ export default class App extends Component {
                   <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
                 </li>
                 <li>
-                  <Link to="/perfil" className="navbar-brand">Perfil</Link>
+                  {this.state.authed &&
+                    <Link to="/perfil" className="navbar-brand">Perfil</Link>}
                 </li>
                 <li>
                   {this.state.authed
@@ -99,6 +100,7 @@ export default class App extends Component {
                 <PublicRoute authed={this.state.authed} path='/login' component={Login} />
                 <PublicRoute authed={this.state.authed} path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
+                <PrivateRoute authed={this.state.authed} path='/perfil/:id' component={Perfil} />
                 <PrivateRoute authed={this.state.authed} path='/perfil' component={Perfil} />
                 <PrivateRoute authed={this.state.authed} path='/evento/:id' component={Evento} />
                 <PrivateRoute authed={this.state.authed} path='/evento/new' component={Evento} />

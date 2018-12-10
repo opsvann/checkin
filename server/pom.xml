@@ -49,6 +49,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- as dependencias abaixo foram adicionadas para usar o postgres -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1201-jdbc41</version>
+            <scope>runtime</scope>
+        </dependency>
+
          <!-- as dependencias abaixo foram adicionadas para o projeto funcionar com java 11 -->
         <dependency>
             <groupId>javax.xml.bind</groupId>

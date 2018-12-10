@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {grupos} from '../../constant/grupos'
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 export default class EventoList extends Component {
@@ -20,13 +21,17 @@ export default class EventoList extends Component {
 
   navigateToEvento = (evento) => {
     const user = reactLocalStorage.getObject("user");
-    console.log(user.grupo);
-    if (user.grupo === "ADMIN") {
+    if (user.grupo === grupos.ADMIN) {
       this.props.history.push(`/evento/${evento.id}`)
     } else {
       evento.perfis.push(user);
       this.checkIn(evento);
+      this.setState({});
     }
+  }
+
+  navigateToNewEvento = () => {
+    this.props.history.push(`/evento/new`)
   }
 
   checkIn = (evento) => {
@@ -38,18 +43,15 @@ export default class EventoList extends Component {
       },
       body: JSON.stringify(evento)
     })
-    .then(() => {
+    .then(response => response.json())
+    .then((data) => {
       alert("Check-in realizado")
     })
   }
 
-  navigateToNewEvento = () => {
-    this.props.history.push(`/evento/new`)
-  }
-
   render () {
     const user = reactLocalStorage.getObject("user");
-    const admin = user.grupo === "ADMIN" ? true : false;
+    const admin = user.grupo === grupos.ADMIN ? true : false;
     return (
       <div>
         <h1> Eventos </h1>
@@ -64,6 +66,12 @@ export default class EventoList extends Component {
                 <a className="list-group-item active">
                   <h4 className="list-group-item-heading">{evento.nome}</h4>
                   <p className="list-group-item-text">{evento.descricao}</p>
+                  {evento.perfis.map((perfil, i) => {
+                    return user.uid === perfil.uid &&
+                    <p key={i} className="list-group-item-text" style={{color: 'grey'}}>
+                      Check-in realizado neste evento
+                    </p>
+                  })}
                 </a>
               </div>
             )

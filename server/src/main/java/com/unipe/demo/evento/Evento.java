@@ -15,7 +15,7 @@ public class Evento {
 
     private String descricao;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Set<Perfil> perfis;
 
     public Evento() {}
@@ -49,11 +49,11 @@ public class Evento {
       this.descricao = descricao;
     }
 
-    public Set getPerfis() {
+    public Set<Perfil> getPerfis() {
       return perfis;
     }
 
-    public void setPerfis(Set perfis) {
+    public void setPerfis(Set<Perfil> perfis) {
       this.perfis = perfis;
     }
 
@@ -63,6 +63,7 @@ public class Evento {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
+                ", perfis='" + perfis + '\'' +
                 '}';
     }
 }

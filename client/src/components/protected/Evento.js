@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import Participantes from './Participantes'
+import {grupos} from '../../constant/grupos'
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 export default class Evento extends Component {
 
@@ -17,7 +20,7 @@ export default class Evento extends Component {
     this.removerEvento = this.removerEvento.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.match.params.id !== "new") {
       fetch(`http://localhost:8080/evento/${this.props.match.params.id}`)
         .then(response => response.json())
@@ -61,6 +64,8 @@ export default class Evento extends Component {
   }
 
   render () {
+    const user = reactLocalStorage.getObject("user");
+    const admin = user.grupo === grupos.ADMIN ? true : false;
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <h1> Evento </h1>
@@ -68,6 +73,7 @@ export default class Evento extends Component {
           <div className="form-group">
             <label>Nome</label>
             <input
+              readOnly={!admin}
               className="form-control"
               placeholder="Nome"
               name="nome"
@@ -77,15 +83,18 @@ export default class Evento extends Component {
           <div className="form-group">
             <label>Descrição</label>
             <input
+              readOnly={!admin}
               className="form-control"
               placeholder="Descrição"
               name="descricao"
               value={this.state.evento.descricao}
               onChange={this.handleChange} />
           </div>
-          <button type="submit" className="btn btn-primary">{this.props.match.params.id !== "new" ? "Editar" : "Salvar"}</button>
-          { this.props.match.params.id !== "new" &&
-          <button type="button" className="btn btn-primary" onClick={this.removerEvento}>Remover</button>}
+          {this.state.evento.perfis && <Participantes perfis={this.state.evento.perfis} />}
+          {admin &&
+            <button type="submit" className="btn btn-primary" style={{marginRight: 5}}>Salvar</button>}
+          {admin && this.props.match.params.id !== "new" &&
+            <button type="button" className="btn btn-primary" onClick={this.removerEvento}>Remover</button>}
         </form>
       </div>
     )

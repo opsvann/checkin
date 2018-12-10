@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {grupos} from '../../constant/grupos'
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 export default class Perfil extends Component {
@@ -21,7 +22,8 @@ export default class Perfil extends Component {
 
   componentWillMount() {
     const user = reactLocalStorage.getObject("user");
-    fetch(`http://localhost:8080/perfil/${user.id}`)
+    const perfilId = this.props.match.params.id;
+    fetch(`http://localhost:8080/perfil/${perfilId || user.id}`)
       .then(response => response.json())
       .then(data => this.setState({perfil: data}));
   }
@@ -64,7 +66,7 @@ export default class Perfil extends Component {
 
   render () {
     const user = reactLocalStorage.getObject("user");
-    const admin = user.grupo === "ADMIN" ? true : false;
+    const admin = user.grupo === grupos.ADMIN ? true : false;
     return (
       <div className="col-sm-6 col-sm-offset-3">
         <h1> Perfil </h1>
@@ -81,6 +83,7 @@ export default class Perfil extends Component {
           <div className="form-group">
             <label>Email</label>
             <input
+              readOnly
               className="form-control"
               placeholder="Email"
               name="email"
@@ -92,13 +95,13 @@ export default class Perfil extends Component {
               <label>Grupo</label>
               <input
                 className="form-control"
-                placeholder="Grupo"
+                placeholder="Nome do grupo"
                 name="grupo"
                 value={this.state.perfil.grupo}
                 onChange={this.handleChange} />
             </div>
           }
-          <button type="submit" className="btn btn-primary">Editar</button>
+          <button type="submit" className="btn btn-primary" style={{marginRight: 5}}>Salvar</button>
           <button type="button" className="btn btn-primary" onClick={this.removerPerfil}>Remover</button>
         </form>
       </div>
